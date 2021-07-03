@@ -1,5 +1,13 @@
+from django.db import models
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import (
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
+    DeleteView
+)
 from .models import Post
 
 posts =[
@@ -22,6 +30,17 @@ def home(request):
         "posts": Post.objects.all()
     }
     return render(request, 'app/home.html', context)
+
+
+class PostListView(ListView):
+    model = Post
+    template_name = 'app/home.html'
+    context_object_name = 'posts'
+    ordering = ['-date_posted']
+
+class PostDetailView(DetailView):
+    model = Post
+
 
 def about(request):
     # return HttpResponse('<h1>About</h1>')
