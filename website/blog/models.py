@@ -10,7 +10,7 @@ from user_profile.models import User
 class Category(models.Model):
     title = models.CharField(max_length=150, unique=True)
     slug = models.SlugField(null=True, blank=True)
-    created_date = models.DateField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.title
@@ -23,7 +23,7 @@ class Category(models.Model):
 class Tag(models.Model):
     title = models.CharField(max_length=150)
     slug = models.SlugField(null=True, blank=True)
-    created_date = models.DateField(auto_now_add=True)
+    created_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.title
@@ -65,8 +65,8 @@ class Blog(models.Model):
     slug = models.SlugField(null=True, blank=True)
     banner = models.ImageField(upload_to='blog_banners')
     description = models.TextField(null=True)
-    created_date = models.DateField(auto_now_add=True)
-    updated_date = models.DateField(auto_now=True)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
         return self.title

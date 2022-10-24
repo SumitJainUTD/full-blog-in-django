@@ -6,9 +6,10 @@
     </div>
     <div class="down-content">
       {% for c in blog.category.all %}
-        <span>{{c.title}}</span>
+<!--        <span><a href="{%url 'category_blogs' c.slug%}">{{c.title}}</a></span>-->
+      <span>{{c.title}}</span>
       {% endfor %}
-      <a href="post-details.html"><h4>{{blog.title}}</h4></a>
+      <a href="{% url 'blog_details' blog.slug %}"><h4>{{blog.title}}</h4></a>
       <ul class="post-info">
         <li><a href="#">{{blog.user.first_name}}</a></li>
         <li><a href="#">{{blog.created_date}}</a></li>
@@ -22,7 +23,7 @@
               <li><i class="fa fa-tags"></i></li>
               {% if blog.tags.all.count > 0 %}
                 {% for t in blog.tags.all %}
-                    <li><a href="#">{{t.title}}</a>,</li>
+                    <li><a href="{%url 'tag_blogs' t.slug%}">{{t.title}}</a>,</li>
                 {% endfor %}
               {% else %}
                 None

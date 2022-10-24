@@ -50,7 +50,7 @@ class UserAccountManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.CharField(max_length=80, primary_key=True, default=uuid.uuid4, editable=False)
     first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255, null=True)
+    last_name = models.CharField(max_length=255, blank=True, null=True)
     email = models.EmailField(unique=True, max_length=255)
     profile_image = models.ImageField(null=True, blank=True, upload_to="profile_images")
     is_active = models.BooleanField(default=True)
@@ -72,6 +72,14 @@ class User(AbstractBaseUser, PermissionsMixin):
         "Is the user a member of staff?"
         # Simplest possible answer: All admins are staff
         return self.is_admin
+
+    def get_profile_picture(self):
+        url = ""
+        try:
+            url = self.profile_image.url
+        except:
+            url = ""
+        return url
 
 
 class OldPasswords(models.Model):

@@ -1,0 +1,12 @@
+ <p class="font-weight-bold">Related Blogs:</p>
+
+  <ol>
+    {% for b in related_blogs %}
+     {% if b.slug != blog.slug %}
+          <li><a href="{% url 'blog_details' b.slug %}">
+            <h5>{{b.title}}</h5>
+    <!--        <span>{{b.created_date}}</span>-->
+          </a></li>
+      {% endif %}
+    {% endfor %}
+  </ol>
