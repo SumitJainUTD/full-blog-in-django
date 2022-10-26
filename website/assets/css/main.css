@@ -1,3 +1,10 @@
-.blog-posts .submit-comment textarea {
+.blog-postss .submit-commentttt textarea {
     text-transform: none !important;
+}
+
+.fa-heart {
+    color: red !important;
+}
+.empty-heart {
+    color: #CDCDCD !important;
 }

@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import TextForm
@@ -106,6 +108,7 @@ def blog_details(request, slug):
     all_blogs = Blog.objects.order_by('-created_date')[:5]
     categories = Category.objects.filter(category_blogs__id=blog.id)
     related_blogs = Blog.objects.filter(category__in=categories)
+    liked_by = request.user in blog.likes.all()
 
     if request.method == 'POST' and request.user.is_authenticated:
         form = TextForm(request.POST)
@@ -121,6 +124,21 @@ def blog_details(request, slug):
     context = {
         "blog": blog,
         "all_blogs": all_blogs,
-        "related_blogs": related_blogs[:5]
+        "related_blogs": related_blogs[:5],
+        "liked_by": liked_by
     }
     return render(request, 'blog_details.html', context)
+
+@login_required(login_url='/')
+def like_blog(request, pk):
+    print("aaaaa")
+    context = {}
+    blog = get_object_or_404(Blog, pk=pk)
+    if request.user in blog.likes.all():
+        blog.likes.remove(request.user)
+        context['liked'] = False
+    else:
+        blog.likes.add(request.user)
+        context['liked'] = True
+    context['likes_count'] = blog.likes.all().count()
+    return JsonResponse(context, safe=False)
