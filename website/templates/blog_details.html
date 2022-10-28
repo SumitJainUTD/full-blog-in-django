@@ -20,6 +20,10 @@
                   <!--        <span><a href="{%url 'category_blogs' c.slug%}">{{c.title}}</a></span>-->
                         <span>{{c.title}}</span>
                         {% endfor %}
+                      <div dir="rtl">
+                        <button type="button" al class="btn btn-primary">Mark Completed</button>
+                      </div>
+
                       <a href="javascript:void()"><h4>{{blog.title}}</h4></a>
                       <ul class="post-info">
                         <li><a href="#">{{blog.user.first_name}}</a></li>
@@ -41,18 +45,21 @@
                             {% endif %}
                             </ul>
                           </div>
+
                           {% if request.user.is_authenticated %}
                             <div class="col-6">
+
                             <ul class="post-share">
+                              <li><button type="button" class="btn btn-primary">Mark Completed</button></li>
                               <li id="like-count">{{blog.likes.count  }} </li>
                               {% if liked_by %}
                                 <li class="=pl-3 pr-3"><a href="javascript:void(0)"><i id="like-icon" data-blog="{{blog.id}}" class="fa fa-heart"></i></a></li>
                               {% else %}
                                 <li class="=pl-3 pr-3"><a href="javascript:void(0)"><i id="like-icon" data-blog="{{blog.id}}" class="fa fa-heart empty-heart"></i></a></li>
                               {% endif %}
-                              <li><i class="fa fa-share-alt"></i></li>
-                              <li><a href="#">Facebook</a>,</li>
-                              <li><a href="#"> Twitter</a></li>
+<!--                              <li><i class="fa fa-share-alt"></i></li>-->
+<!--                              <li><a href="#">Facebook</a>,</li>-->
+<!--                              <li><a href="#"> Twitter</a></li>-->
                             </ul>
                           </div>
                           {% else %}

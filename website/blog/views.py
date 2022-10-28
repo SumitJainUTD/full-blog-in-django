@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
@@ -142,3 +143,29 @@ def like_blog(request, pk):
         context['liked'] = True
     context['likes_count'] = blog.likes.all().count()
     return JsonResponse(context, safe=False)
+
+
+def search_blogs(request):
+    search_key = request.GET.get('search', None)
+    recent_blogs = Blog.objects.order_by('-created_date')
+    tags = Tag.objects.order_by('-created_date')
+
+    if search_key:
+        blogs = Blog.objects.filter(
+            Q(title__icontains=search_key) |
+            Q(category__title__icontains=search_key) |
+            Q(user__first_name__icontains=search_key) |
+            Q(tags__title__icontains=search_key)
+        ).distinct()
+
+        context = {
+            "blogs": blogs,
+            "recent_blogs": recent_blogs,
+            "tags": tags,
+            "search_key": search_key
+        }
+
+        return render(request, 'search.html', context)
+
+    else:
+        return redirect('home')
