@@ -48,6 +48,8 @@ class UserAccountManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.CharField(max_length=80, primary_key=True, default=uuid.uuid4, editable=False)
     username = models.CharField(max_length=255)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
     email = models.EmailField(unique=True, max_length=255)
     profile_image = models.ImageField(null=True, blank=True, upload_to="profile_images")
     is_active = models.BooleanField(default=True)

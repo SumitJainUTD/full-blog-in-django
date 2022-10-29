@@ -49,48 +49,48 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError(e)
         return self.cleaned_data.get('password')
 
-# class UserProfileUpdateForm(forms.ModelForm):
-#     def _init__(self, *args, **kwargs):
-#         super().__init__(*args, **kwargs)
-#
-#     class Meta:
-#         model = User
-#         fields = ("first_name", "last_name", "username", "email",)
-#
-#     def clean_username(self):
-#         username = self.cleaned_data.get('username')
-#         model = self.Meta.model
-#         user = model.objects.filter(username__iexact=username).exclude(pk=self.instance.pk)
-#
-#         if user.exists():
-#             raise forms.ValidationError("A user with that name already exists")
-#
-#         return self.cleaned_data.get('username')
-#
-#     def clean_email(self):
-#         email = self.cleaned_data.get('email')
-#         model = self.Meta.model
-#         user = model.objects.filter(email__iexact=email).exclude(pk=self.instance.pk)
-#
-#         if user.exists():
-#             raise forms.ValidationError("A user with that email already exists")
-#
-#         return self.cleaned_data.get('email')
-#
-#     def change_password(self):
-#         if 'new_password' in self.data and 'confirm_password' in self.data:
-#             new_password = self.data['new_password']
-#             confirm_password = self.data['confirm_password']
-#             if new_password != '' and confirm_password != '':
-#                 if new_password != confirm_password:
-#                     raise forms.ValidationError("Passwords do not match")
-#                 else:
-#                     self.instance.set_password(new_password)
-#                     self.instance.save()
-#
-#     def clean(self):
-#         self.change_password()
-#
-#
-# class ProfilePictureUpdateForm(forms.Form):
-#     profile_image = forms.ImageField(required=True)
+class UserProfileUpdateForm(forms.ModelForm):
+    def _init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    class Meta:
+        model = User
+        fields = ("first_name", "last_name", "username", "email",)
+
+    def clean_username(self):
+        username = self.cleaned_data.get('username')
+        model = self.Meta.model
+        user = model.objects.filter(pk=self.instance.pk)
+        print(user[0].username)
+        if user[0].username != username:
+            raise forms.ValidationError("username change is not allowed")
+
+        return self.cleaned_data.get('username')
+
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        model = self.Meta.model
+        user = model.objects.filter(pk=self.instance.pk)
+
+        if user[0].email != email:
+            raise forms.ValidationError("email change is not allowed")
+
+        return self.cleaned_data.get('email')
+
+    def change_password(self):
+        if 'new_password' in self.data and 'confirm_password' in self.data:
+            new_password = self.data['new_password']
+            confirm_password = self.data['confirm_password']
+            if new_password != '' and confirm_password != '':
+                if new_password != confirm_password:
+                    raise forms.ValidationError("Passwords do not match")
+                else:
+                    self.instance.set_password(new_password)
+                    self.instance.save()
+
+    def clean(self):
+        self.change_password()
+
+
+class ProfilePictureUpdateForm(forms.Form):
+    profile_image = forms.ImageField(required=True)
