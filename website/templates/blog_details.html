@@ -26,7 +26,7 @@
 
                       <a href="javascript:void()"><h4>{{blog.title}}</h4></a>
                       <ul class="post-info">
-                        <li><a href="#">{{blog.user.first_name}}</a></li>
+                        <li><a href="#">{{blog.user.username}}</a></li>
                         <li><a href="#">{{blog.created_date}}</a></li>
                         <li><a href="#">{{blog.blog_comments.all.count}} comments</a></li>
                       </ul>
@@ -93,7 +93,7 @@
                               <img src="{{comment.user.get_profile_picture}}" alt="">
                             </div>
                             <div class="right-content">
-                              <h4>{{comment.user.first_name}}<span>{{comment.created_date}}</span></h4>
+                              <h4>{{comment.user.username}}<span>{{comment.created_date}}</span></h4>
                               <p>{{comment.text}}</p>
                               <form id="reply" action="{% url 'blog_details' blog.slug %}" method="POST">
                                 {% csrf_token %}

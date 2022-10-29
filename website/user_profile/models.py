@@ -7,7 +7,7 @@ from django.contrib.auth.models import (
 
 
 class UserAccountManager(BaseUserManager):
-    def create_user(self, first_name, email, last_name=None, password=None):
+    def create_user(self, username, email, password=None):
         """
         Creates and saves a User with the given email, date of
         birth and password.
@@ -23,24 +23,22 @@ class UserAccountManager(BaseUserManager):
 
         user = self.model(
             email=email,
-            first_name=first_name,
+            username=username,
         )
-        user.last_name = last_name
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, first_name, email, last_name=None, password=None):
+    def create_superuser(self, username, email, password=None):
         """
         Creates and saves a superuser with the given email, date of
         birth and password.
         """
         user = self.create_user(
-            first_name=first_name,
+            username=username,
             email=email,
             password=password,
         )
-        user.last_name = last_name
         user.is_admin = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -49,8 +47,7 @@ class UserAccountManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     id = models.CharField(max_length=80, primary_key=True, default=uuid.uuid4, editable=False)
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255, blank=True, null=True)
+    username = models.CharField(max_length=255)
     email = models.EmailField(unique=True, max_length=255)
     profile_image = models.ImageField(null=True, blank=True, upload_to="profile_images")
     is_active = models.BooleanField(default=True)

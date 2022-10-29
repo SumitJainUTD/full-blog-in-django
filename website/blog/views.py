@@ -154,7 +154,7 @@ def search_blogs(request):
         blogs = Blog.objects.filter(
             Q(title__icontains=search_key) |
             Q(category__title__icontains=search_key) |
-            Q(user__first_name__icontains=search_key) |
+            Q(user__username__icontains=search_key) |
             Q(tags__title__icontains=search_key)
         ).distinct()
 

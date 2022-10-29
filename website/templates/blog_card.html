@@ -11,7 +11,7 @@
       {% endfor %}
       <a href="{% url 'blog_details' blog.slug %}"><h4>{{blog.title}}</h4></a>
       <ul class="post-info">
-        <li><a href="#">{{blog.user.first_name}}</a></li>
+        <li><a href="#">{{blog.user.username}}</a></li>
         <li><a href="#">{{blog.created_date}}</a></li>
         <li><a href="#">{{blog.blog_comments.all.count}} comments</a></li>
       </ul>
