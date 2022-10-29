@@ -10,16 +10,16 @@ from .forms import (
     # UserProfileUpdateForm,
     # ProfilePictureUpdateForm
 )
-# from .decorators import (
-#     not_logged_in_required
-# )
+from .decorators import (
+    not_logged_in_required
+)
 # from .models import Follow, User
 from .models import User
 # from notification.models import Notificaiton
 
 
 @never_cache
-# @not_logged_in_required
+@not_logged_in_required
 def login_user(request):
     form = LoginForm()
 
@@ -48,7 +48,7 @@ def logout_user(request):
 
 
 @never_cache
-# @not_logged_in_required
+@not_logged_in_required
 def register_user(request):
     form = UserRegistrationForm()
 
