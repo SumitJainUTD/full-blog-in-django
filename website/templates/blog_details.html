@@ -26,11 +26,11 @@
 
                       <a href="javascript:void()"><h4>{{blog.title}}</h4></a>
                       <ul class="post-info">
-                        <li><a href="#">{{blog.user.username}}</a></li>
+                        <li><a href="{% url 'user_information' blog.user.username%}">{{blog.user.username}}</a></li>
                         <li><a href="#">{{blog.created_date}}</a></li>
                         <li><a href="#">{{blog.blog_comments.all.count}} comments</a></li>
                       </ul>
-                      <p>{{blog.description}}</p>
+                      <p>{{blog.description|safe}}</p>
                       <div class="post-options">
                         <div class="row">
                           <div class="col-6">
